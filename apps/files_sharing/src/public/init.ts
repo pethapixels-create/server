@@ -11,6 +11,7 @@ import { getNavigation } from '@nextcloud/files'
 import { loadState } from '@nextcloud/initial-state'
 import logger from '../services/logger.ts'
 import router from './router.ts'
+import { buildOpenFileQuery } from './openfile.ts'
 import registerFileDropView from './views/publicFileDrop.ts'
 import registerPublicFileShareView from './views/publicFileShare.ts'
 import registerPublicShareView from './views/publicShare.ts'
@@ -45,7 +46,7 @@ if (fileId !== null) {
 		.then(() => window.OCP.Files.Router.goToRoute(
 			'filelist',
 			{ ...window.OCP.Files.Router.params, token, fileid: String(fileId) },
-			{ ...window.OCP.Files.Router.query, openfile: 'true' },
+			buildOpenFileQuery(window.OCP.Files.Router.query),
 		))
 		.catch((error) => logger.error('Could not open the shared file', { error }))
 }
